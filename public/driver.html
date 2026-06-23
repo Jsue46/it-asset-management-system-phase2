@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Driver - Portal del Repartidor</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="dark-theme driver-theme">
+    
+    <!-- Header -->
+    <header class="app-header">
+        <a href="index.html" class="back-home-link">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+        </a>
+        <div class="portal-title-area">
+            <i class="fa-solid fa-motorcycle driver-portal-title"></i>
+            <h2>Portal del Repartidor</h2>
+        </div>
+        <div style="width: 100px;"></div> <!-- Spacer -->
+    </header>
+
+    <!-- Sección de Autenticación (Oculta si hay sesión activa) -->
+    <section class="auth-wrapper" id="authSection">
+        <div class="auth-card">
+            <h3>Bienvenido Repartidor</h3>
+            <p>Ingresa para ver pedidos disponibles en tu zona</p>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" id="tabLogin" onclick="setAuthTab('login')">Ingresar</button>
+                <button class="auth-tab-btn" id="tabRegister" onclick="setAuthTab('register')">Registrarse</button>
+            </div>
+            
+            <!-- Login -->
+            <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label for="loginEmail"><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                    <input type="email" id="loginEmail" placeholder="repartidor@correo.com" required value="repartidor.demo@correo.com">
+                </div>
+                <div class="input-group">
+                    <label for="loginPass"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" required value="123456">
+                </div>
+                <button type="submit" class="submit-btn" id="btnLoginSubmit">
+                    <i class="fa-solid fa-right-to-bracket"></i> Ingresar al Portal
+                </button>
+            </form>
+            
+            <!-- Registro -->
+            <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
+                <div class="input-group">
+                    <label for="regName"><i class="fa-solid fa-user"></i> Nombre Completo</label>
+                    <input type="text" id="regName" placeholder="Carlos Gómez" required>
+                </div>
+                <div class="input-group">
+                    <label for="regEmail"><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                    <input type="email" id="regEmail" placeholder="carlos@correo.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="regPass"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                    <input type="password" id="regPass" placeholder="Mínimo 6 caracteres" required>
+                </div>
+                <div class="input-row">
+                    <div class="input-group">
+                        <label for="regVehicle"><i class="fa-solid fa-motorcycle"></i> Vehículo</label>
+                        <select id="regVehicle" required>
+                            <option value="Bicicleta">Bicicleta</option>
+                            <option value="Motocicleta" selected>Motocicleta</option>
+                            <option value="Automóvil">Automóvil</option>
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="regPlate"><i class="fa-solid fa-id-card"></i> Placa / ID</label>
+                        <input type="text" id="regPlate" placeholder="M-123XYZ" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-camera"></i> Foto de Perfil (Simulada)</label>
+                    <div class="photo-select-grid">
+                        <input type="hidden" id="regPhoto" value="driver1">
+                        <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Christian" class="avatar-option selected" onclick="selectAvatar(this, 'driver1')" alt="Driver 1">
+                        <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Owen" class="avatar-option" onclick="selectAvatar(this, 'driver2')" alt="Driver 2">
+                        <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Aneka" class="avatar-option" onclick="selectAvatar(this, 'driver3')" alt="Driver 3">
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" id="btnRegisterSubmit">
+                    <i class="fa-solid fa-user-plus"></i> Crear Cuenta Conductor
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Sección Dashboard Repartidor -->
+    <section class="dashboard-wrapper hidden" id="dashboardSection">
+        <!-- Tarjeta de Perfil -->
+        <div class="profile-card">
+            <div class="profile-info">
+                <img src="" id="profileAvatarPic" class="profile-avatar" alt="Avatar">
+                <div class="profile-text">
+                    <h4 id="profileDriverName">Carlos Gómez</h4>
+                    <p id="profileDriverEmail">carlos@correo.com</p>
+                    <span class="vehicle-badge" id="profileVehicleTag"><i class="fa-solid fa-motorcycle"></i> Motocicleta • M-123XYZ</span>
+                </div>
+            </div>
+            <div style="display: flex; align-items: center; gap: 1.5rem;">
+                <div class="rating-badge">
+                    <i class="fa-solid fa-star"></i> <span id="profileRatingText">5.0</span>
+                </div>
+                <button class="logout-button" onclick="handleLogout()">
+                    <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+                </button>
+            </div>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="dashboard-content-grid">
+            
+            <!-- Izquierda: Entrega Activa actual -->
+            <div class="dashboard-card" id="cardActiveDelivery">
+                <h3><i class="fa-solid fa-truck-ramp-box"></i> Entrega en Progreso</h3>
+                <div id="noActiveDeliveryMsg" class="empty-message">
+                    <i class="fa-solid fa-map-location-dot"></i>
+                    No tienes ninguna entrega en progreso. Revisa los pedidos pendientes en tu zona a la derecha y acepta uno para comenzar.
+                </div>
+                
+                <div class="active-order-panel hidden" id="activeDeliveryPanel">
+                    <div class="status-box">
+                        <div class="pulse-indicator transit"></div>
+                        <h4>En Camino al Destino</h4>
+                        <p id="deliveryDescLabel">Descripción del paquete</p>
+                    </div>
+
+                    <div class="client-mini-card">
+                        <img src="" id="clientAvatar" alt="Cliente">
+                        <div>
+                            <small style="color: var(--text-muted); font-size: 0.65rem; text-transform: uppercase;">Cliente</small>
+                            <h5 id="clientNameLabel">Juan Pérez</h5>
+                            <p>Cobro Sugerido: <strong style="color: var(--secondary);" id="deliveryPriceLabel">Q40.00</strong></p>
+                        </div>
+                    </div>
+
+                    <div class="route-card">
+                        <div class="route-node">
+                            <i class="fa-solid fa-circle-dot" style="color: var(--secondary);"></i>
+                            <div>
+                                <small>Origen (Recoger)</small>
+                                <p id="deliveryOriginLabel">Dirección Origen</p>
+                            </div>
+                        </div>
+                        <div class="route-connector"></div>
+                        <div class="route-node">
+                            <i class="fa-solid fa-location-dot" style="color: var(--primary);"></i>
+                            <div>
+                                <small>Destino (Entregar)</small>
+                                <p id="deliveryDestLabel">Dirección Destino</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <button class="complete-delivery-btn" onclick="handleCompleteDelivery()" id="btnCompleteSubmit">
+                        <i class="fa-solid fa-check"></i> Marcar como Entregado
+                    </button>
+                </div>
+            </div>
+
+            <!-- Derecha: Pedidos disponibles en la zona -->
+            <div class="dashboard-card" id="cardAvailableOrders">
+                <h3><i class="fa-solid fa-list-ul"></i> Pedidos Disponibles en Zona</h3>
+                
+                <div class="available-list" id="availableOrdersList">
+                    <!-- Inyección dinámica -->
+                    <div class="empty-message">
+                        <i class="fa-solid fa-box-open"></i>
+                        No hay solicitudes de envíos pendientes en este momento.
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="landing-footer" style="background: rgba(0,0,0,0.2); padding: 1.5rem; margin-top: auto;">
+        <p>&copy; 2026 - Universidad de San Carlos de Guatemala - Facultad de Ingeniería - Teoría de Sistemas 2 - Grupo G7</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="driver.js"></script>
+</body>
+</html>

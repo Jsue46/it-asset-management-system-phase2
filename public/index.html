@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Delivery - Portal del Servicio</title>
+    <meta name="description" content="Portal unificado para clientes, repartidores y documentación ágil del MVP de Flash Delivery.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="dark-theme landing-page">
+    <div class="landing-stars"></div>
+    <div class="landing-glow"></div>
+    
+    <main class="landing-wrapper">
+        <header class="landing-header">
+            <div class="logo-icon-large"><i class="fa-solid fa-bolt"></i></div>
+            <h1>Flash Delivery</h1>
+            <p>Servicios de Envíos al Instante - MVP del Core de Negocio</p>
+        </header>
+
+        <section class="portal-grid">
+            
+            <!-- Tarjeta Cliente -->
+            <a href="client.html" class="portal-card client-card" id="linkClientPortal">
+                <div class="portal-card-icon"><i class="fa-solid fa-user-tie"></i></div>
+                <h3>Portal del Cliente</h3>
+                <p>Ingresa para crear solicitudes de envío, estimar tarifas en tiempo real según kilometraje, monitorear el estado de tu repartidor y calificar la entrega.</p>
+                <span class="portal-card-action">Entrar al Portal <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <!-- Tarjeta Repartidor -->
+            <a href="driver.html" class="portal-card driver-card" id="linkDriverPortal">
+                <div class="portal-card-icon"><i class="fa-solid fa-motorcycle"></i></div>
+                <h3>Portal del Repartidor</h3>
+                <p>Ingresa para gestionar tu perfil de conductor, ver las solicitudes disponibles de tu zona en tiempo real, aceptar envíos y marcarlos como entregados.</p>
+                <span class="portal-card-action">Entrar al Portal <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+            <!-- Tarjeta Documentos -->
+            <a href="docs.html" class="portal-card docs-card" id="linkDocsPortal">
+                <div class="portal-card-icon"><i class="fa-solid fa-file-invoice"></i></div>
+                <h3>Documentación Ágil</h3>
+                <p>Visualiza el backlog de historias de usuario, los registros del Sprint Planning, la bitácora de las reuniones de Daily Scrum y exporta el reporte completo en PDF.</p>
+                <span class="portal-card-action">Ver Documentación <i class="fa-solid fa-arrow-right"></i></span>
+            </a>
+
+        </section>
+
+        <footer class="landing-footer">
+            <p>&copy; 2026 - Universidad de San Carlos de Guatemala - Facultad de Ingeniería - Teoría de Sistemas 2 - Grupo G7</p>
+        </footer>
+    </main>
+</body>
+</html>

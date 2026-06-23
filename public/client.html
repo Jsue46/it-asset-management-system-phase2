@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Delivery - Portal del Cliente</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="dark-theme client-theme">
+    
+    <!-- Header -->
+    <header class="app-header">
+        <a href="index.html" class="back-home-link">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+        </a>
+        <div class="portal-title-area">
+            <i class="fa-solid fa-bolt client-portal-title"></i>
+            <h2>Portal del Cliente</h2>
+        </div>
+        <div style="width: 100px;"></div> <!-- Spacer -->
+    </header>
+
+    <!-- Sección de Autenticación (Oculta si hay sesión activa) -->
+    <section class="auth-wrapper" id="authSection">
+        <div class="auth-card">
+            <h3>Bienvenido Cliente</h3>
+            <p>Ingresa tus credenciales para solicitar envíos</p>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" id="tabLogin" onclick="setAuthTab('login')">Ingresar</button>
+                <button class="auth-tab-btn" id="tabRegister" onclick="setAuthTab('register')">Registrarse</button>
+            </div>
+            
+            <!-- Login -->
+            <form class="auth-form" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="input-group">
+                    <label for="loginEmail"><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                    <input type="email" id="loginEmail" placeholder="cliente@correo.com" required value="cliente.demo@correo.com">
+                </div>
+                <div class="input-group">
+                    <label for="loginPass"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                    <input type="password" id="loginPass" placeholder="••••••••" required value="123456">
+                </div>
+                <button type="submit" class="submit-btn" id="btnLoginSubmit">
+                    <i class="fa-solid fa-right-to-bracket"></i> Ingresar al Portal
+                </button>
+            </form>
+            
+            <!-- Registro -->
+            <form class="auth-form hidden" id="registerForm" onsubmit="handleRegister(event)">
+                <div class="input-group">
+                    <label for="regName"><i class="fa-solid fa-user"></i> Nombre Completo</label>
+                    <input type="text" id="regName" placeholder="Juan Pérez" required>
+                </div>
+                <div class="input-group">
+                    <label for="regEmail"><i class="fa-solid fa-envelope"></i> Correo Electrónico</label>
+                    <input type="email" id="regEmail" placeholder="juan.cliente@correo.com" required>
+                </div>
+                <div class="input-group">
+                    <label for="regPass"><i class="fa-solid fa-lock"></i> Contraseña</label>
+                    <input type="password" id="regPass" placeholder="Mínimo 6 caracteres" required>
+                </div>
+                <div class="input-group">
+                    <label><i class="fa-solid fa-camera"></i> Foto de Perfil (Simulada)</label>
+                    <div class="photo-select-grid">
+                        <input type="hidden" id="regPhoto" value="avatar1">
+                        <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Felix" class="avatar-option selected" onclick="selectAvatar(this, 'avatar1')" alt="Avatar 1">
+                        <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Aria" class="avatar-option" onclick="selectAvatar(this, 'avatar2')" alt="Avatar 2">
+                        <img src="https://api.dicebear.com/7.x/adventurer/svg?seed=Jack" class="avatar-option" onclick="selectAvatar(this, 'avatar3')" alt="Avatar 3">
+                    </div>
+                </div>
+                <button type="submit" class="submit-btn" id="btnRegisterSubmit">
+                    <i class="fa-solid fa-user-plus"></i> Crear Cuenta Cliente
+                </button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Sección Dashboard Cliente -->
+    <section class="dashboard-wrapper hidden" id="dashboardSection">
+        <!-- Tarjeta de Perfil -->
+        <div class="profile-card">
+            <div class="profile-info">
+                <img src="" id="profileAvatarPic" class="profile-avatar" alt="Avatar">
+                <div class="profile-text">
+                    <h4 id="profileClientName">Juan Pérez</h4>
+                    <p id="profileClientEmail">juan.cliente@correo.com</p>
+                </div>
+            </div>
+            <button class="logout-button" onclick="handleLogout()">
+                <i class="fa-solid fa-right-from-bracket"></i> Cerrar Sesión
+            </button>
+        </div>
+
+        <!-- Contenido principal -->
+        <div class="dashboard-content-grid">
+            
+            <!-- Izquierda: Formulario de solicitud -->
+            <div class="dashboard-card" id="cardRequestForm">
+                <h3><i class="fa-solid fa-square-plus"></i> Solicitar Nuevo Envío</h3>
+                <form id="deliveryRequestForm" onsubmit="handleRequestOrder(event)">
+                    <div class="input-group">
+                        <label for="orderOrigin"><i class="fa-solid fa-location-dot"></i> Dirección de Origen</label>
+                        <input type="text" id="orderOrigin" placeholder="Ej. Avenida Reforma 12-45 Zona 10" required value="Avenida Reforma 12-45, Zona 10">
+                    </div>
+                    <div class="input-group" style="margin-top: 1rem;">
+                        <label for="orderDestination"><i class="fa-solid fa-location-pin"></i> Dirección de Destino</label>
+                        <input type="text" id="orderDestination" placeholder="Ej. Calle de la Universidad Zona 12" required value="Campus Central USAC, Edificio T-3, Zona 12">
+                    </div>
+                    <div class="input-group" style="margin-top: 1rem;">
+                        <label for="orderDesc"><i class="fa-solid fa-box"></i> Descripción del Paquete</label>
+                        <input type="text" id="orderDesc" placeholder="Ej. Laptop, libros de texto, planos" required value="Laptop Dell y planos de Arquitectura">
+                    </div>
+                    
+                    <div class="input-row" style="margin-top: 1rem;">
+                        <div class="input-group" style="flex: 1;">
+                            <label for="orderDistance"><i class="fa-solid fa-route"></i> Distancia Estimada (Km)</label>
+                            <input type="number" id="orderDistance" min="1" max="100" required value="8" oninput="calculateFare(this.value)">
+                        </div>
+                        <div class="input-group" style="flex: 1;">
+                            <label><i class="fa-solid fa-tag"></i> Tarifa Base Calculada</label>
+                            <div class="fare-box" id="txtBasePrice">Q40.00</div>
+                        </div>
+                    </div>
+                    
+                    <div class="input-group" style="margin-top: 1rem;">
+                        <label for="orderPrice"><i class="fa-solid fa-hand-holding-dollar"></i> Precio Ofrecido (Sugerido)</label>
+                        <input type="number" id="orderPrice" min="5" required value="40">
+                        <small style="font-size: 0.7rem; color: var(--text-muted); margin-top: 0.2rem;">Por defecto se establece la tarifa base, pero puedes ofrecer más para que lo acepten rápido.</small>
+                    </div>
+                    
+                    <button type="submit" class="form-submit-btn" id="btnRequestSubmit">
+                        <i class="fa-solid fa-paper-plane"></i> Publicar Solicitud de Envío
+                    </button>
+                </form>
+            </div>
+
+            <!-- Derecha: Estado de Orden Activa -->
+            <div class="dashboard-card" id="cardActiveOrder">
+                <h3><i class="fa-solid fa-truck-fast"></i> Seguimiento de Envío</h3>
+                <div id="noActiveOrderMsg" class="empty-message">
+                    <i class="fa-solid fa-circle-info"></i>
+                    No tienes ningún envío activo en este momento. Llena el formulario de la izquierda para solicitar uno.
+                </div>
+                
+                <div class="active-order-panel hidden" id="activeOrderPanel">
+                    <div class="status-box">
+                        <div class="pulse-indicator searching" id="orderPulse"></div>
+                        <h4 id="orderStatusLabel">Buscando Repartidor...</h4>
+                        <p id="orderDescLabel">Detalles del paquete</p>
+                    </div>
+
+                    <div class="route-card">
+                        <div class="route-node">
+                            <i class="fa-solid fa-circle-dot" style="color: var(--secondary);"></i>
+                            <div>
+                                <small>Origen</small>
+                                <p id="orderOriginLabel">Dirección Origen</p>
+                            </div>
+                        </div>
+                        <div class="route-connector"></div>
+                        <div class="route-node">
+                            <i class="fa-solid fa-location-dot" style="color: var(--primary);"></i>
+                            <div>
+                                <small>Destino</small>
+                                <p id="orderDestLabel">Dirección Destino</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div style="display: flex; justify-content: space-between; align-items: center; background: rgba(255,255,255,0.02); padding: 0.8rem 1rem; border-radius: 8px; border: 1px solid var(--border-color); font-size: 0.85rem;">
+                        <span>Tarifa sugerida:</span>
+                        <strong style="color: var(--secondary); font-size: 1.05rem;" id="orderPriceLabel">Q40.00</strong>
+                    </div>
+
+                    <!-- Repartidor Asignado -->
+                    <div class="driver-mini-card hidden" id="driverBox">
+                        <img src="" id="driverAvatar" alt="Driver">
+                        <div>
+                            <h5 id="driverNameLabel">Carlos Gómez</h5>
+                            <p id="driverVehicleLabel"><i class="fa-solid fa-motorcycle"></i> Motocicleta • M-123XYZ</p>
+                            <div style="font-size: 0.72rem; color: var(--warning); margin-top: 2px;">
+                                <i class="fa-solid fa-star"></i> <span id="driverRatingLabel">4.8</span> (Reputación)
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Cuadro de Calificación -->
+                    <div class="rating-prompt hidden" id="ratingBox">
+                        <h4 style="font-family: var(--font-display); font-size: 1.05rem; font-weight: 700;">¡Tu paquete fue entregado!</h4>
+                        <p style="font-size: 0.78rem; color: var(--text-secondary);">Por favor califica a tu repartidor de 1 a 5 estrellas:</p>
+                        <div class="star-rating" id="starSelector">
+                            <i class="fa-regular fa-star" onclick="setStarRating(1)" data-star="1"></i>
+                            <i class="fa-regular fa-star" onclick="setStarRating(2)" data-star="2"></i>
+                            <i class="fa-regular fa-star" onclick="setStarRating(3)" data-star="3"></i>
+                            <i class="fa-regular fa-star" onclick="setStarRating(4)" data-star="4"></i>
+                            <i class="fa-regular fa-star" onclick="setStarRating(5)" data-star="5"></i>
+                        </div>
+                        <button class="submit-btn" style="background: var(--success); font-size: 0.85rem; padding: 0.6rem; width: 100%;" onclick="submitRating()" id="btnSendRating">
+                            Enviar Valoración
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="landing-footer" style="background: rgba(0,0,0,0.2); padding: 1.5rem; margin-top: auto;">
+        <p>&copy; 2026 - Universidad de San Carlos de Guatemala - Facultad de Ingeniería - Teoría de Sistemas 2 - Grupo G7</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="client.js"></script>
+</body>
+</html>

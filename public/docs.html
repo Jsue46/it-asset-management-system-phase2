@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flash Delivery - Documentación Ágil</title>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="index.css">
+</head>
+<body class="dark-theme">
+    
+    <!-- Header -->
+    <header class="app-header">
+        <a href="index.html" class="back-home-link">
+            <i class="fa-solid fa-arrow-left"></i> Volver al Inicio
+        </a>
+        <div class="portal-title-area">
+            <i class="fa-solid fa-file-invoice text-warning" style="color: var(--warning);"></i>
+            <h2>Documentación Ágil y Ceremonias</h2>
+        </div>
+        <div style="width: 100px;"></div>
+    </header>
+
+    <!-- Contenido -->
+    <main class="dashboard-wrapper">
+        
+        <div class="docs-header-controls">
+            <div class="docs-subtabs">
+                <button class="docs-tab-btn active" onclick="switchDocsTab('stories')" id="tabStories">
+                    <i class="fa-solid fa-book"></i> Historias de Usuario
+                </button>
+                <button class="docs-tab-btn" onclick="switchDocsTab('ceremonies')" id="tabCeremonies">
+                    <i class="fa-solid fa-users-rectangle"></i> Ceremonias Scrum
+                </button>
+                <button class="docs-tab-btn" onclick="switchDocsTab('retrospective')" id="tabRetro">
+                    <i class="fa-solid fa-rotate-left"></i> Retrospectiva
+                </button>
+            </div>
+            
+            <button class="export-btn" onclick="triggerPrint()">
+                <i class="fa-solid fa-file-pdf"></i> Exportar Documentación (PDF)
+            </button>
+        </div>
+
+        <div class="docs-content-container">
+            
+            <!-- VISTA 1: USER STORIES -->
+            <div class="docs-view active" id="viewStories">
+                <div class="docs-section-header">
+                    <h2>Historias de Usuario y Criterios de Aceptación</h2>
+                    <p>Requerimientos funcionales del MVP descompuestos en historias de usuario y definidos con el formato formal de aceptación.</p>
+                </div>
+                
+                <table class="styled-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 10%;">ID</th>
+                            <th style="width: 25%;">Épica</th>
+                            <th style="width: 35%;">Historia de Usuario (Como / Quiero / Para)</th>
+                            <th style="width: 30%;">Criterios de Aceptación (Definition of Done)</th>
+                        </tr>
+                    </thead>
+                    <tbody id="tblUserStoriesBody">
+                        <!-- Carga dinámica -->
+                    </tbody>
+                </table>
+            </div>
+
+            <!-- VISTA 2: CEREMONIAS SCRUM -->
+            <div class="docs-view" id="viewCeremonies">
+                <div class="docs-section-header">
+                    <h2>Ceremonias de SCRUM Realizadas</h2>
+                    <p>Documentación y registro del marco de trabajo ágil implementado para este entregable.</p>
+                </div>
+                
+                <div class="ceremonies-grid">
+                    <!-- Equipo y Roles -->
+                    <div class="ceremony-card">
+                        <h3><i class="fa-solid fa-users text-accent" style="color: var(--secondary);"></i> Estructura del Equipo de Trabajo</h3>
+                        <div class="team-roles-list">
+                            <div class="role-item">
+                                <span class="role-badge sm-badge">Scrum Master</span>
+                                <strong>Sergio Andrés Larios Fajardo</strong>
+                                <p>Encargado de facilitar las ceremonias, remover impedimentos y mantener el tablero Kanban actualizado.</p>
+                            </div>
+                            <div class="role-item">
+                                <span class="role-badge dev-badge">Dev Team (Diseño UX/UI &amp; CSS)</span>
+                                <strong>Estudiante - Integrante G7 (A)</strong>
+                                <p>Responsable del diseño responsivo, la hoja de estilos general del MVP y la maquetación de vistas.</p>
+                            </div>
+                            <div class="role-item">
+                                <span class="role-badge dev-badge">Dev Team (Desarrollo Lógico &amp; JS)</span>
+                                <strong>Estudiante - Integrante G7 (B)</strong>
+                                <p>Responsable de la lógica del simulador, persistencia de datos local y sincronización interactiva de pedidos.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Sprint Planning -->
+                    <div class="ceremony-card">
+                        <h3><i class="fa-solid fa-calendar-check text-accent" style="color: var(--secondary);"></i> Sprint Planning 1 (Día 1)</h3>
+                        <div class="ceremony-detail-text">
+                            <p><strong>Fecha:</strong> Lunes 22 de Junio de 2026</p>
+                            <p><strong>Objetivo del Sprint:</strong> Entregar un Producto Mínimo Viable (MVP) completamente funcional del flujo básico de última milla de Flash Delivery en 4 días de desarrollo.</p>
+                            
+                            <h5>Alcance Acordado (Backlog del Sprint):</h5>
+                            <ul>
+                                <li>Registro e Inicio de sesión para clientes y repartidores.</li>
+                                <li>Perfil básico con información del vehículo para repartidores.</li>
+                                <li>Formulario de solicitud de envío con cálculo de tarifa automática (Km * Q5).</li>
+                                <li>Tablero del repartidor para ver solicitudes pendientes en la zona.</li>
+                                <li>Aceptación de un pedido por parte del repartidor ("Match").</li>
+                                <li>Flujo de entrega en camino y cambio de estado a entregado.</li>
+                                <li>Valoración final por parte del cliente (estrellas 1-5).</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Daily Standups -->
+                <div class="meeting-evidence" style="border: none; padding: 0;">
+                    <h3><i class="fa-solid fa-comments"></i> Bitácora de Daily Scrum (Evidencias de Reunión)</h3>
+                    <p class="section-desc">Historial de las bitácoras simuladas del Daily Scrum de 15 minutos en los días del Sprint.</p>
+                    
+                    <div class="daily-tabs-nav" id="dailyTabs">
+                        <button class="daily-tab-btn active" onclick="switchDailyDay(0)">Día 1 (22 Jun)</button>
+                        <button class="daily-tab-btn" onclick="switchDailyDay(1)">Día 2 (23 Jun)</button>
+                        <button class="daily-tab-btn" onclick="switchDailyDay(2)">Día 3 (24 Jun)</button>
+                    </div>
+                    
+                    <div class="daily-display-box">
+                        <div class="daily-meta">
+                            <h4 id="lblDailyTitle">Día 1: Lunes 22 de Junio</h4>
+                            <p id="lblDailySummary">Configuración del entorno y roles.</p>
+                        </div>
+                        
+                        <div class="daily-chat-box" id="lstDailyChat">
+                            <!-- Chat inyectado -->
+                        </div>
+                        
+                        <!-- Evidencia visual -->
+                        <div class="meeting-evidence">
+                            <h5><i class="fa-solid fa-camera"></i> Captura de Pantalla - Reunión de Daily Scrum (Evidencia Digital)</h5>
+                            <div class="mock-meeting-room">
+                                <div class="meeting-participant">
+                                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Sergio" alt="Sergio">
+                                    <span>Sergio (SM)</span>
+                                </div>
+                                <div class="meeting-participant">
+                                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Dev1" alt="Dev 1">
+                                    <span>Dev Team A (CSS)</span>
+                                </div>
+                                <div class="meeting-participant">
+                                    <img src="https://api.dicebear.com/7.x/bottts/svg?seed=Dev2" alt="Dev 2">
+                                    <span>Dev Team B (JS)</span>
+                                </div>
+                                <div class="meeting-screen-share">
+                                    <div class="screen-share-preview">
+                                        <i class="fa-solid fa-table-columns" style="font-size: 2.5rem; margin-bottom: 0.5rem;"></i>
+                                        <span>Compartiendo Tablero Kanban de Desarrollo</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- VISTA 3: RETROSPECTIVE -->
+            <div class="docs-view" id="viewRetro">
+                <div class="docs-section-header">
+                    <h2>Sprint Retrospective (Retrospectiva del MVP)</h2>
+                    <p>Análisis de desempeño del equipo y lecciones aprendidas durante el ciclo de desarrollo.</p>
+                </div>
+                
+                <div class="retro-layout">
+                    <div class="retro-card retro-well">
+                        <h3><i class="fa-solid fa-circle-check"></i> ¿Qué salió bien?</h3>
+                        <ul id="lstRetroWell">
+                            <!-- Inyección dinámica -->
+                        </ul>
+                    </div>
+                    
+                    <div class="retro-card retro-bad">
+                        <h3><i class="fa-solid fa-circle-xmark"></i> ¿Qué salió mal / Dificultades?</h3>
+                        <ul id="lstRetroBad">
+                            <!-- Inyección dinámica -->
+                        </ul>
+                    </div>
+                    
+                    <div class="retro-card retro-improve">
+                        <h3><i class="fa-solid fa-arrows-spin"></i> Acciones de Mejora (¿Cómo mejorar?)</h3>
+                        <ul id="lstRetroImprove">
+                            <!-- Inyección dinámica -->
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="landing-footer" style="background: rgba(0,0,0,0.2); padding: 1.5rem; margin-top: auto;">
+        <p>&copy; 2026 - Universidad de San Carlos de Guatemala - Facultad de Ingeniería - Teoría de Sistemas 2 - Grupo G7</p>
+    </footer>
+
+    <!-- Contenedor exclusivo para impresión PDF -->
+    <div id="printReportContainer" class="print-only"></div>
+
+    <!-- Scripts -->
+    <script src="docs.js"></script>
+</body>
+</html>

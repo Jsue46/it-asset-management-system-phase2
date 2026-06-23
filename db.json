@@ -1,0 +1,178 @@
+{
+  "users": {
+    "cliente.demo@correo.com": {
+      "name": "Cliente Demo",
+      "email": "cliente.demo@correo.com",
+      "pass": "123456",
+      "role": "Cliente",
+      "photo": "avatar1"
+    },
+    "repartidor.demo@correo.com": {
+      "name": "Repartidor Demo",
+      "email": "repartidor.demo@correo.com",
+      "pass": "123456",
+      "role": "Repartidor",
+      "photo": "driver1",
+      "vehicle": "Motocicleta",
+      "plate": "M-891ASD",
+      "ratingSum": 5,
+      "ratingCount": 1
+    },
+    "test@correo.com": {
+      "name": "Cliente Test",
+      "email": "test@correo.com",
+      "pass": "password123",
+      "role": "Cliente",
+      "photo": "avatar1"
+    },
+    "yocofi8310@jctoto.com": {
+      "name": "juan",
+      "email": "yocofi8310@jctoto.com",
+      "pass": "123456",
+      "role": "Cliente",
+      "photo": "avatar1"
+    }
+  },
+  "orders": [
+    {
+      "id": "ORD-205803",
+      "origin": "Avenida Reforma 12-45, Zona 10",
+      "destination": "Campus Central USAC, Edificio T-3, Zona 12",
+      "desc": "Laptop Dell y planos de Arquitectura",
+      "distance": 8,
+      "price": 40,
+      "status": "Entregado",
+      "clientEmail": "yocofi8310@jctoto.com",
+      "driverEmail": "repartidor.demo@correo.com",
+      "rating": null,
+      "createdAt": "2026-06-23T13:13:36.363Z"
+    }
+  ],
+  "userStories": [
+    {
+      "id": "US-001",
+      "epic": "Épica A: Gestión de Usuarios",
+      "story": "Como usuario (Cliente o Repartidor), quiero registrarme e iniciar sesión con mis datos para poder acceder de forma personalizada al servicio.",
+      "criteria": [
+        "El usuario puede elegir entre rol 'Cliente' y 'Repartidor'.",
+        "Si es Repartidor, debe ingresar tipo de vehículo (Bicicleta, Moto, Carro) y número de placa.",
+        "El formulario de registro valida que todos los campos requeridos estén llenos.",
+        "Se simula la subida de una foto de perfil.",
+        "La sesión iniciada se guarda para evitar re-autenticación al refrescar la página."
+      ]
+    },
+    {
+      "id": "US-002",
+      "epic": "Épica B: Solicitud de Envío",
+      "story": "Como Cliente, quiero crear una solicitud de envío especificando origen, destino, descripción y precio sugerido, para que un repartidor acepte llevar mi paquete.",
+      "criteria": [
+        "El cliente debe ingresar Origen, Destino y una breve descripción del paquete.",
+        "El sistema calcula automáticamente la tarifa base usando la distancia ingresada: Km * Q.5.00.",
+        "El cliente puede proponer un precio sugerido (mínimo igual a la tarifa base).",
+        "Al enviar la solicitud, el estado inicial de la orden debe ser 'Pendiente'."
+      ]
+    },
+    {
+      "id": "US-003",
+      "epic": "Épica C: El \"Match\"",
+      "story": "Como Repartidor, quiero ver una lista de pedidos disponibles en mi zona y aceptar uno de ellos, para iniciar el servicio y que el cliente sea notificado.",
+      "criteria": [
+        "El repartidor ve la lista de pedidos en estado 'Pendiente' en tiempo real.",
+        "Al hacer clic en 'Aceptar Pedido', el estado cambia a 'En camino'.",
+        "La orden se asocia al repartidor activo y desaparece de la lista de disponibles de otros repartidores.",
+        "La interfaz del cliente se actualiza instantáneamente mostrando los datos del repartidor y el estado 'En camino'."
+      ]
+    },
+    {
+      "id": "US-004",
+      "epic": "Épica D: Finalización",
+      "story": "Como Repartidor, quiero marcar el pedido como entregado una vez llegue al destino, para finalizar el servicio e iniciar el proceso de cobro.",
+      "criteria": [
+        "El repartidor visualiza un botón para marcar como entregado en su orden activa.",
+        "Al presionar el botón, el estado cambia a 'Entregado'.",
+        "El cliente visualiza que su paquete ha sido entregado exitosamente."
+      ]
+    },
+    {
+      "id": "US-005",
+      "epic": "Épica D: Finalización",
+      "story": "Como Cliente, quiero calificar el servicio del repartidor con estrellas de 1 a 5, para dejar retroalimentación sobre la calidad de la entrega.",
+      "criteria": [
+        "Al completarse el envío (estado 'Entregado'), se activa una pantalla de calificación en la app del Cliente.",
+        "El cliente puede seleccionar una calificación del 1 al 5.",
+        "Al calificar, el pedido cambia de estado a 'Finalizado' y se calcula el promedio de calificación del repartidor."
+      ]
+    }
+  ],
+  "dailyStandups": [
+    {
+      "day": "Día 1: Lunes 22 de Junio",
+      "summary": "Configuración del entorno, definición de roles e inicio del Sprint Planning.",
+      "chat": [
+        {
+          "sender": "Sergio Larios (SM)",
+          "text": "¡Hola equipo! Bienvenidos al primer Daily Scrum. Ayer configuramos el tablero Kanban en Trello e ingresamos las historias de usuario de las Épicas A, B, C y D. Hoy iniciamos oficialmente el Sprint 1 para entregar el MVP el viernes. ¿Qué hicieron ayer, qué harán hoy y hay algún impedimento?"
+        },
+        {
+          "sender": "Dev Team 1 (CSS)",
+          "text": "Ayer trabajé en la definición del diseño visual, paleta de colores y variables CSS. Hoy estructuraré el HTML index.html y comenzaré con el diseño de las pantallas simuladas. No tengo impedimentos."
+        },
+        {
+          "sender": "Dev Team 2 (JS)",
+          "text": "Ayer revisé los requerimientos de la base de datos simulada y el estado global en localStorage. Hoy implementaré la lógica de usuarios (registro y login) en app.js. De momento todo claro."
+        }
+      ]
+    },
+    {
+      "day": "Día 2: Martes 23 de Junio (Hoy)",
+      "summary": "Implementación del core: registro de usuarios, creación de pedidos y cálculo automático de tarifa.",
+      "chat": [
+        {
+          "sender": "Sergio Larios (SM)",
+          "text": "Hola a todos. Hoy es nuestro segundo Daily. Ayer vi un excelente avance en el diseño y en la base de usuarios. ¿Cómo vamos hoy y qué planeamos entregar?"
+        },
+        {
+          "sender": "Dev Team 1 (CSS)",
+          "text": "Ayer completé los mockups de los celulares y el layout principal. Hoy terminaré el formulario de envío del cliente y programaré la visualización del cálculo automático de tarifas (Km * Q5). Sin impedimentos."
+        },
+        {
+          "sender": "Dev Team 2 (JS)",
+          "text": "Ayer terminé el login/registro y las sesiones persistentes. Hoy me enfocaré en la creación de las órdenes, que se guarden en localStorage y aparezcan instantáneamente en la app de repartidores."
+        }
+      ]
+    },
+    {
+      "day": "Día 3: Miércoles 24 de Junio",
+      "summary": "Simulación del Match (Aceptar pedido), flujo 'En camino', entrega del paquete y calificación.",
+      "chat": [
+        {
+          "sender": "Sergio Larios (SM)",
+          "text": "Buenos días. Estamos a mitad del ciclo de desarrollo. Las historias del login y creación de pedidos ya están en QA. ¿Qué haremos hoy?"
+        },
+        {
+          "sender": "Dev Team 2 (JS)",
+          "text": "Hoy programaré la lógica de aceptación del pedido por parte del repartidor y el cambio de estado en tiempo real. También la marca de 'Entregado' y la calificación de 5 estrellas en la interfaz del cliente. Con esto cerraríamos el flujo MVP."
+        },
+        {
+          "sender": "Dev Team 1 (CSS)",
+          "text": "Apoyaré en las micro-animaciones del sistema de estrellas de calificación y comenzaré a formatear la hoja de estilos de impresión para exportar los reportes Scrum a PDF de forma perfecta."
+        }
+      ]
+    }
+  ],
+  "retrospective": {
+    "well": [
+      "La decisión de simular dos teléfonos móviles en la misma pantalla facilitó enormemente las pruebas del flujo en tiempo real (Match/Aceptación).",
+      "El uso de variables CSS y Flexbox/Grid simplificó la adaptabilidad de la UI y permitió un modo oscuro consistente y elegante.",
+      "El diseño modular del código JavaScript en un único archivo app.js facilitó la sincronización del estado mediante localStorage sin dependencias pesadas."
+    ],
+    "bad": [
+      "Tuvimos un cuello de botella temporal al sincronizar la orden en camino entre las dos apps simuladas (solucionado usando eventos personalizados y almacenamiento local compartido).",
+      "El límite de WIP (máximo 2 tareas por persona) nos obligó a reestructurar tareas de QA, ya que algunas se acumulaban al final del día."
+    ],
+    "improve": [
+      "Automatizar más casos de prueba directamente en el simulador para agilizar la demo con el docente.",
+      "Planificar mejor las revisiones de QA a lo largo del Sprint para evitar cuellos de botella en la entrega final."
+    ]
+  }
+}
